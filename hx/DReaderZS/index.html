@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<style type="text/css">
+		html, body {
+		    background: #fff;
+		    margin: 0;
+		    padding: 0;
+		    width: 100%;
+		    height: 100%;
+		}
+		#mainContainer{
+		    background: #ccc;
+		    height: 100%;
+		}
+		#flashContainer {
+		    background: #eee;
+		    position: relative;
+		    height: 100%;
+			width: 100%;
+		}
+		#menuContainer {
+		    background: #fff;
+		    width: 250px;
+		    float: right;
+		    overflow-y: scroll;
+		    overflow-x: hidden;
+		    height: 100%;
+		}
+		a {
+		    white-space: nowrap;
+		    color: #666;
+		    text-decoration: none;
+		}
+		a:hover {
+		    color: #f00;
+		    text-decoration: underline;
+		}
+		ul.file-list{
+		    list-style: none;
+		    margin: 0;
+		    padding: 0;
+		}
+		ul.file-list > li {
+		    line-height: 25px;
+		    padding: 5px;
+		    border-bottom: 1px solid #999;
+		}
+		</style>
+		<script type="text/javascript" src="js/umsp-player.js"></script>
+		
+		<script type="text/javascript">
+			var appname = 'arch';
+			var token = 'c179b71f839643899bce954235b0e394';
+			var hostname = 'www.vvhome.com';
+			var port = 7777;
+			hostname = '192.168.168.203';
+
+			var wmalpha = 0.2;
+			var wmdata = [];
+			
+			var R_ZOOM = 0x01;
+			//var R_DOWNLOAD = 0x01 << 3;//下载 暂不支持下载
+			var R_PRINT = 0x01 << 2;//打印
+			var R_SHENQING = 0x01 << 4;//打印申请
+			var R_VIEW_WORDS = 0x01 << 5;//查看文字
+			var R_FIT_WIDTH = 0x01 << 6;//横向适应
+			var R_FIT_HEIGHT = 0x01 << 7;//纵向适应
+			var R_REGION = 0x01 << 8;//区域授权
+			var mask = R_ZOOM | R_PRINT | R_SHENQING | R_VIEW_WORDS | R_FIT_WIDTH | R_FIT_HEIGHT | R_REGION;
+			var parameters = {
+				//tmask:mask,
+				token:token, //授权码
+				appname:appname, //应用ID
+				host:hostname, //主机地址，注意，没有端口号
+				port:port, //服务端口
+				wmdata:wmdata //水印数据
+			};
+			
+			function loadFile(docfile, displayName,ysArr,gqArr) {
+			    if(window.reader){
+				    //路径规则： umsp主路径   原始/高清图像文件夹路径    parameters.file文件位置
+					//parameters.imgtype_YS = "scan/PT";//原始图像文件夹名称
+					//parameters.imgtype_GQ = "scan/GQ"; //高清图像文件夹名称
+					parameters.imgtype_YS_Arr = ysArr;//版本为V2时，该参数为原始图像文件MD5值列表
+					parameters.imgtype_GQ_Arr = gqArr; //版本为V2时，该参数为高清图像文件MD5值列表
+					//parameters.names = docnames, //文件名称Array 不写默认就是文件路径下全部文件,仅适用于版本V1
+			        parameters.file = docfile;//文件位置
+			        parameters.displayName = displayName;  //默认打开的文件 ，不写默认是第一个文件 如：默认打开002.JPG
+					parameters.defaultimgtype = 0;//0代表原始图像 1代表高清图像 不赋值默认是0
+			        
+					parameters.viewIndexVisiable = false; //是否显示索引，注意，只有多页文件有效，如：pdf/tiff（未来支持的doc、docx）
+					parameters.fit = 1;//0代表页面适应宽度，1代表页面适应高度  在有区域授权的情况下，必须为1，否则区域授权无效
+			        parameters.archArea = false, //文件显示区域 注意：region=true 会在右侧显示区域的内容，否则只加载区域内的图片
+					parameters.region = false;//是否开启区域授权功能，不写默认不开启
+					parameters.pagesize = 2;// 双页浏览每页显示的页数，不写默认当前容器的最大条数
+					parameters.archByName = "郭鑫";//双页浏览的查阅人名字
+					
+					//parameters.regionDisplay = false;//区域显示 默认为true true的情况下，用户只能查看授权的区域。 false ：用户不能查看授权的区域
+					
+					var printAtt = new Array();
+					printAtt.push(1);
+					printAtt.push(2);
+					parameters.printJurisdiction=printAtt;
+					//版本号
+					parameters.edition = "V2";
+					
+			        //reader.loadData(parameters); //请求加载
+			        reader.load(parameters); //请求加载
+			    }
+			    else {
+			        alert('阅读器正在加载中，请稍后...');
+			    }
+			}
+			
+			//生成打印记录，点击打印按钮后调用此方法
+			function sendPrintRecord(page){
+				//page ： 打印的页次 如区间 1-10  或者单页 2
+			}
+			//生成浏览记录，每浏览图片时候自动调用此方法，
+			function sendViewRecord(pageIndex){
+				//pageIndex ： 打印的序号 
+			}
+			
+			//打印申请 ，点击打印申请按钮后调用此方法
+			function sendCheckPages(page){
+				//page ： 打印的页次 如区间 1-10  或者单页 2
+			}
+			
+			//多页浏览 需要加载的文件名称(中组部)
+			function getPageNames() {
+				return ["001.JPG", "002.JPG", "003.JPG", "004.JPG", "005.JPG"];
+				//return ["001.JPG"];
+			}
+			
+			//提交区域 多页浏览
+			function getRegionData(parameters){
+				//返回的parameters为数组对象
+				var regionData = parameters[0];//regionData为数组对象
+				var fileName = parameters[1];//fileName为当前显示的图片名称
+				console.info(parameters);
+			}
+
+			function getPrimaryKey(){
+				var E01ZB100 = document.getElementById("E01ZB100").value;
+				window.parent.postMessage({"E01ZB100":E01ZB100},'*');
+			}
+			
+			//下面边距
+			window.onload = function(){
+				_umsp_reader_baseuri = "umsp";
+				window.reader = UMSPHelper.createReader('#flashContainer');
+				loadFile('/.cadremultip', '干档双页模式');
+			}
+
+	        // 接受父页面发来的信息
+	        window.addEventListener("message", function(event){
+				var data = event.data;
+				var dataStr = JSON.stringify(data);
+				if(null!=data && data.length>0){
+					var ysArr = new Array();
+					var gqArr = new Array();
+					for(var i=0;i<data.length;i++){
+						var ysObj = {
+							"fileName":data[i].HANDLEKEY,
+							"fileNo":data[i].E01ZB01
+						};
+						ysArr.push(ysObj);
+						var gqObj = {
+							"fileName":data[i].HIGHCLEARKEY,
+							"fileNo":data[i].E01ZB01
+						};
+						gqArr.push(gqObj);
+					}
+					document.getElementById("E01ZB100").value=data[0].E01ZB100
+					_umsp_reader_baseuri = "umsp";
+					window.reader = UMSPHelper.createReader('#flashContainer');
+					loadFile('/.cadremultip', '干档双页模式',ysArr,gqArr);
+				}
+	        });
+		</script>
+	<body>
+		<input type="hidden" id="E01ZB100" value=""/>
+		<div id="flashContainer" onmousedown="getPrimaryKey();"></div>
+	</body>
+</html>

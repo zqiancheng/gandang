@@ -1,0 +1,56 @@
+.sidebar {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 70px;
+    bottom: 0;
+    overflow-y: scroll;
+    background-color: transparent;
+    background-image: url('./img/sidebar_bg.png');
+    background-size: cover;
+}
+.el-submenu>.el-submenu__title>span{
+    color: #A7B1C2;
+}
+.el-submenu>.el-submenu__title>.sidebar-i{
+    color: #717F94;
+}
+.el-menu-item>span{
+    color: #A7B1C2;
+}
+.el-menu-item>.sidebar-i{
+    color: #717F94;
+}
+.el-menu-item i {
+    color: #717F94;
+}
+.is-active>.el-submenu__title>.sidebar-i{
+    color: #fff; 
+}
+.is-active>.el-submenu__title>.sidebar-one{
+    color: #fff; 
+}
+.is-active>.el-submenu__title>.el-submenu__icon-arrow{
+    color: #fff; 
+}
+.is-active>.iconfont{
+    color: #fff; 
+}
+.is-active>.sidebar-one{
+    color: #fff;
+}
+.sidebar-show{
+    background: #2A2E35;
+}
+.el-submenu.is-active{
+     /* box-shadow:inset 0px 50px 0px -2px #D94242; */
+    box-shadow:inset 0px 50px 0px -2px #498BED;
+}
+.el-menu-item.is-active{
+    /* box-shadow:inset 5px 100px 0px -2px #D94242; */
+    box-shadow:inset 5px 0px 0px -2px #498BED; 
+}
+
+
+
+

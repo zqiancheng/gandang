@@ -1,0 +1,15 @@
+/* .el-header {
+    padding: 0 20px;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -ms-flex-negative: 0;
+    flex-shrink: 0
+} */
+/* 头部导航 */
+.skinHeader {
+    background-image: url('./img/header_bg.png');
+}
+/* table表格头部 */
+.el-table__header th, .el-table__header tr {
+    background-color: #D7EAF6;
+}

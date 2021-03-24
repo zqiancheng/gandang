@@ -1,0 +1,15 @@
+.el-button--primary{
+	background-color: #398FF0;
+    border-color: #398FF0;
+}
+/* 操作按钮 */
+.el-button--success{
+	background-color: #398FF0;
+    border-color: #398FF0;
+}
+/* 首页档案台账管理按钮 */
+.el-radio-btn>.is-active>.el-radio-button__inner{
+    background-color: #398FF0 !important;
+    border-color: #398FF0 !important;
+    box-shadow: #398FF0 -1px 0px 0px 0px !important;
+}

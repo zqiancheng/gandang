@@ -1,0 +1,6 @@
+.skinHeader {
+    background-image: url('./img/header_bg.png');
+}
+.el-table__header th, .el-table__header tr {
+    background-color: #F7E2E2;
+}
